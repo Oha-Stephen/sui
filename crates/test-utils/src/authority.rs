@@ -106,16 +106,12 @@ where
 }
 
 /// This function can be called after `spawn_test_authorities` to
-/// start fullnodes.
-pub async fn spawn_fullnodes(config: &NetworkConfig, fullnode_num: u8) -> Vec<SuiNodeHandle> {
-    let mut fullnode_handles = Vec::new();
-    for _ in 0..fullnode_num {
-        let registry_service = RegistryService::new(Registry::new());
-        let fullnode_config = config.fullnode_config_builder().build().unwrap();
-        let node = start_node(&fullnode_config, registry_service).await;
-        fullnode_handles.push(node);
-    }
-    fullnode_handles
+/// start a fullnode.
+pub async fn spawn_fullnode(config: &NetworkConfig, rpc_port: Option<u16>) -> SuiNodeHandle {
+    let registry_service = RegistryService::new(Registry::new());
+    let config_builder = config.fullnode_config_builder().set_rpc_port(rpc_port);
+    let fullnode_config = config_builder.build().unwrap();
+    start_node(&fullnode_config, registry_service).await
 }
 
 /// Get a network client to communicate with the consensus.
