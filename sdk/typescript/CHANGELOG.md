@@ -1,5 +1,11 @@
 # @mysten/sui.js
 
+## 0.22.0
+
+### Minor Changes
+
+- a55236e48: Add gas price field to RPC transaction data type
+
 ## 0.21.0
 
 ### Minor Changes
